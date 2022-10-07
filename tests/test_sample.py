@@ -1,3 +1,3 @@
 # Avoid -5 error for pytest
-def test0():
+def test_0():
     assert (True)
