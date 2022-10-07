@@ -38,6 +38,6 @@ jobs:
     - name: autopep8
       uses: peter-evans/autopep8@v1.2.1
 
-    - name: Test with pytest
-      run: |
-        pytest
+#     - name: Test with pytest
+#       run: |
+#         pytest
