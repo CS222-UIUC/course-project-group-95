@@ -32,11 +32,11 @@
     />
     <!--This is the head section-->
     <!-- <style> ... </style> -->
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
   </head>
   <body>
     <div>
-      <link href="./notification.css" rel="stylesheet" />
+      <link href="{{url_for('static',filename='notification.css')}}" rel="stylesheet" />
 
       <div class="notification-container">
         <header data-role="Accordion" class="notification-header">
@@ -47,16 +47,16 @@
           <div class="notification-separator"></div>
           <nav class="notification-nav"></nav>
           <nav class="notificationhead-nav notificationhead-root-class-name">
-            <a href="index.html" class="notificationhead-text">
+            <a href="/" class="notificationhead-text">
               <span>Home</span>
             </a>
-            <a href="search.html" class="notificationhead-navlink">
+            <a href="search" class="notificationhead-navlink">
               <span>Search</span>
             </a>
             <span class="notificationhead-text1">
               <span>Notifications</span>
             </span>
-            <a href="profile.html" class="notificationhead-navlink1">
+            <a href="profile" class="notificationhead-navlink1">
               <span>Profile</span>
             </a>
           </nav>
@@ -77,13 +77,13 @@
             <div class="notification-nav1">
               <nav class="homehead-nav homehead-root-class-name21">
                 <span class="homehead-text"><span>Home</span></span>
-                <a href="search.html" class="homehead-navlink">
+                <a href="search" class="homehead-navlink">
                   <span>Search</span>
                 </a>
-                <a href="notification.html" class="homehead-navlink1">
+                <a href="notification" class="homehead-navlink1">
                   <span>Notifications</span>
                 </a>
-                <a href="profile.html" class="homehead-navlink2">
+                <a href="profile" class="homehead-navlink2">
                   <span>Profile</span>
                 </a>
               </nav>

@@ -32,11 +32,11 @@
     />
     <!--This is the head section-->
     <!-- <style> ... </style> -->
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
   </head>
   <body>
     <div>
-      <link href="./profile.css" rel="stylesheet" />
+      <link href="{{url_for('static',filename='profile.css')}}" rel="stylesheet" />
 
       <div class="profile-container">
         <header data-role="Accordion" class="profile-header">
@@ -54,11 +54,11 @@
             </svg>
           </div>
           <nav class="profilehead-nav profilehead-root-class-name">
-            <a href="index.html" class="profilehead-text"><span>Home</span></a>
-            <a href="search.html" class="profilehead-navlink">
+            <a href="/" class="profilehead-text"><span>Home</span></a>
+            <a href="search" class="profilehead-navlink">
               <span>Search</span>
             </a>
-            <a href="notification.html" class="profilehead-navlink1">
+            <a href="notification" class="profilehead-navlink1">
               <span>Notifications</span>
             </a>
             <span class="profilehead-text1"><span>Profile</span></span>
@@ -67,13 +67,13 @@
             <div class="profile-nav1">
               <nav class="homehead-nav homehead-root-class-name23">
                 <span class="homehead-text"><span>Home</span></span>
-                <a href="search.html" class="homehead-navlink">
+                <a href="search" class="homehead-navlink">
                   <span>Search</span>
                 </a>
-                <a href="notification.html" class="homehead-navlink1">
+                <a href="notification" class="homehead-navlink1">
                   <span>Notifications</span>
                 </a>
-                <a href="profile.html" class="homehead-navlink2">
+                <a href="profile" class="homehead-navlink2">
                   <span>Profile</span>
                 </a>
               </nav>
