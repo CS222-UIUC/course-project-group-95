@@ -26,20 +26,10 @@ jobs:
         pip install flask
         pip install Flask
         pip install -r requirements.txt
-        
-  pytest:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
     - name: Test with pytest
       run: |
         pytest ./tests/
-        
-  calculate_test_coverage:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Test coverage
+    - name: Calculate test coverage
       run: |
         coverage run --source=. -m pytest
         coverage report -m
