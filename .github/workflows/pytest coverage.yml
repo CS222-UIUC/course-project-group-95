@@ -35,3 +35,12 @@ jobs:
         coverage run --source=. -m pytest
         coverage report -m
         coverage html
+        
+    - uses: actions/checkout@v2
+
+    - uses: actions/download-artifact@v3
+      with:
+        name: coverage.html
+
+    - name: Display structure of downloaded files
+      run: ls -R
