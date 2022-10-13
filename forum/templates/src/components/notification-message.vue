@@ -1,3 +1,36 @@
+<template>
+  <div class="notification-message-container" v-bind:class="rootClassName">
+    <div class="notification-message-container1">
+      <span>{{ text1 }}</span>
+      <span class="notification-message-text1">Date</span>
+    </div>
+    <span>{{ text2 }}</span>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'NotificationMessage',
+  props: {
+    text2: {
+      type: String,
+      default: 'asdkklasjda;skljdkas;djaskldja;ldjasjd;asjdas;kdsadas;',
+    },
+    rootClassName: String,
+    text: {
+      type: String,
+      default:
+        'contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent',
+    },
+    text1: {
+      type: String,
+      default: 'User Name',
+    },
+  },
+}
+</script>
+
+<style scoped>
 .notification-message-container {
   width: 100%;
   height: 116px;
@@ -43,3 +76,4 @@
     width: auto;
   }
 }
+</style>
