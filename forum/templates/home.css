@@ -12,6 +12,7 @@
   font-style: normal;
   transition: 0.3s;
   font-weight: 400;
+  text-decoration: none;
 }
 .homehead-text:hover {
   color: #000000;
@@ -224,6 +225,9 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+.home-navlink {
+  text-decoration: underline;
 }
 @media(max-width: 991px) {
   .home-nav1 {

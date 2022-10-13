@@ -12,6 +12,7 @@
   font-style: normal;
   transition: 0.3s;
   font-weight: 400;
+  text-decoration: none;
 }
 .homehead-text:hover {
   color: #000000;
