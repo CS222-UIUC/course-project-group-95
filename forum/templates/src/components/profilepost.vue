@@ -1,3 +1,31 @@
+<template>
+  <div class="profilepost-container" v-bind:class="rootClassName">
+    <div class="profilepost-container1">
+      <span>{{ text1 }}</span>
+      <span class="profilepost-text1">Date</span>
+    </div>
+    <span>{{ text2 }}</span>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Profilepost',
+  props: {
+    text1: {
+      type: String,
+      default: 'Title',
+    },
+    text2: {
+      type: String,
+      default: 'asdkklasjda;skljdkas;djaskldja;ldjasjd;asjdas;kdsadas;',
+    },
+    rootClassName: String,
+  },
+}
+</script>
+
+<style scoped>
 .profilepost-container {
   width: 1060px;
   height: 108px;
@@ -43,3 +71,4 @@
     width: auto;
   }
 }
+</style>

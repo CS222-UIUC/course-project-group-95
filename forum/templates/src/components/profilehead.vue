@@ -1,10 +1,49 @@
-.searchhead-nav {
+<template>
+  <nav class="profilehead-nav" v-bind:class="rootClassName">
+    <router-link to="/" class="profilehead-text">{{ text }}</router-link>
+    <router-link to="/search" class="profilehead-navlink">
+      {{ text1 }}
+    </router-link>
+    <router-link to="/notification" class="profilehead-navlink1">
+      {{ text2 }}
+    </router-link>
+    <span class="profilehead-text1">{{ text4 }}</span>
+  </nav>
+</template>
+
+<script>
+export default {
+  name: 'Profilehead',
+  props: {
+    text2: {
+      type: String,
+      default: 'Notifications',
+    },
+    text: {
+      type: String,
+      default: 'Home',
+    },
+    text1: {
+      type: String,
+      default: 'Search',
+    },
+    text4: {
+      type: String,
+      default: 'Profile',
+    },
+    rootClassName: String,
+  },
+}
+</script>
+
+<style scoped>
+.profilehead-nav {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   flex-direction: row;
 }
-.searchhead-text {
+.profilehead-text {
   color: rgba(0, 0, 0, 0.4);
   width: var(--dl-size-size-large);
   font-size: 30px;
@@ -14,13 +53,13 @@
   font-weight: 400;
   text-decoration: none;
 }
-.searchhead-text:hover {
+.profilehead-text:hover {
   color: #000000;
   font-style: normal;
   font-weight: 500;
 }
-.searchhead-text1 {
-  color: #000000;
+.profilehead-navlink {
+  color: rgba(0, 0, 0, 0.4);
   width: var(--dl-size-size-large);
   font-size: 30px;
   font-style: normal;
@@ -28,13 +67,14 @@
   font-weight: 400;
   margin-left: var(--dl-space-space-twounits);
   margin-right: var(--dl-space-space-unit);
+  text-decoration: none;
 }
-.searchhead-text1:hover {
+.profilehead-navlink:hover {
   color: #000000;
   font-style: normal;
   font-weight: 500;
 }
-.searchhead-navlink {
+.profilehead-navlink1 {
   color: rgba(0, 0, 0, 0.4);
   width: var(--dl-size-size-xlarge);
   font-size: 30px;
@@ -43,13 +83,13 @@
   margin-right: var(--dl-space-space-twounits);
   text-decoration: none;
 }
-.searchhead-navlink:hover {
+.profilehead-navlink1:hover {
   color: #000000;
   font-style: normal;
   font-weight: 500;
 }
-.searchhead-navlink1 {
-  color: rgba(0, 0, 0, 0.4);
+.profilehead-text1 {
+  color: #000000;
   width: var(--dl-size-size-medium);
   font-size: 30px;
   font-style: normal;
@@ -57,40 +97,40 @@
   font-weight: 400;
   margin-left: var(--dl-space-space-twounits);
   text-transform: capitalize;
-  text-decoration:   none;
 }
-.searchhead-navlink1:hover {
+.profilehead-text1:hover {
   color: #000000;
   font-style: normal;
   font-weight: 500;
 }
 
 @media(max-width: 767px) {
-  .searchhead-nav {
+  .profilehead-nav {
     align-items: flex-start;
     flex-direction: column;
   }
-  .searchhead-text {
+  .profilehead-text {
     margin-bottom: var(--dl-space-space-unit);
   }
-  .searchhead-text1 {
+  .profilehead-navlink {
     margin-left: 0;
     margin-bottom: var(--dl-space-space-unit);
   }
-  .searchhead-navlink {
+  .profilehead-navlink1 {
     margin-left: 0;
     margin-bottom: var(--dl-space-space-unit);
   }
-  .searchhead-navlink1 {
+  .profilehead-text1 {
     margin-left: 0;
     margin-bottom: var(--dl-space-space-unit);
   }
-  .searchhead-root-class-name {
+  .profilehead-root-class-name {
     display: none;
   }
 }
 @media(max-width: 479px) {
-  .searchhead-root-class-name {
+  .profilehead-root-class-name {
     display: none;
   }
 }
+</style>

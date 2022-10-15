@@ -1,10 +1,49 @@
-.notificationhead-nav {
+<template>
+  <nav class="searchhead-nav" v-bind:class="rootClassName">
+    <router-link to="/" class="searchhead-text">{{ text }}</router-link>
+    <span class="searchhead-text1">{{ text1 }}</span>
+    <router-link to="/notification" class="searchhead-navlink">
+      {{ text2 }}
+    </router-link>
+    <router-link to="/profile" class="searchhead-navlink1">
+      {{ text4 }}
+    </router-link>
+  </nav>
+</template>
+
+<script>
+export default {
+  name: 'Searchhead',
+  props: {
+    text1: {
+      type: String,
+      default: 'Search',
+    },
+    rootClassName: String,
+    text2: {
+      type: String,
+      default: 'Notifications',
+    },
+    text4: {
+      type: String,
+      default: 'Profile',
+    },
+    text: {
+      type: String,
+      default: 'Home',
+    },
+  },
+}
+</script>
+
+<style scoped>
+.searchhead-nav {
   flex: 0 0 auto;
   display: flex;
   align-items: center;
   flex-direction: row;
 }
-.notificationhead-text {
+.searchhead-text {
   color: rgba(0, 0, 0, 0.4);
   width: var(--dl-size-size-large);
   font-size: 30px;
@@ -14,13 +53,13 @@
   font-weight: 400;
   text-decoration: none;
 }
-.notificationhead-text:hover {
+.searchhead-text:hover {
   color: #000000;
   font-style: normal;
   font-weight: 500;
 }
-.notificationhead-navlink {
-  color: rgba(0, 0, 0, 0.4);
+.searchhead-text1 {
+  color: #000000;
   width: var(--dl-size-size-large);
   font-size: 30px;
   font-style: normal;
@@ -28,27 +67,27 @@
   font-weight: 400;
   margin-left: var(--dl-space-space-twounits);
   margin-right: var(--dl-space-space-unit);
-  text-decoration: none;
 }
-.notificationhead-navlink:hover {
+.searchhead-text1:hover {
   color: #000000;
   font-style: normal;
   font-weight: 500;
 }
-.notificationhead-text1 {
-  color: #000000;
+.searchhead-navlink {
+  color: rgba(0, 0, 0, 0.4);
   width: var(--dl-size-size-xlarge);
   font-size: 30px;
   transition: 0.3s;
   margin-left: var(--dl-space-space-twounits);
   margin-right: var(--dl-space-space-twounits);
+  text-decoration: none;
 }
-.notificationhead-text1:hover {
+.searchhead-navlink:hover {
   color: #000000;
   font-style: normal;
   font-weight: 500;
 }
-.notificationhead-navlink1 {
+.searchhead-navlink1 {
   color: rgba(0, 0, 0, 0.4);
   width: var(--dl-size-size-medium);
   font-size: 30px;
@@ -59,38 +98,39 @@
   text-transform: capitalize;
   text-decoration:   none;
 }
-.notificationhead-navlink1:hover {
+.searchhead-navlink1:hover {
   color: #000000;
   font-style: normal;
   font-weight: 500;
 }
 
 @media(max-width: 767px) {
-  .notificationhead-nav {
+  .searchhead-nav {
     align-items: flex-start;
     flex-direction: column;
   }
-  .notificationhead-text {
+  .searchhead-text {
     margin-bottom: var(--dl-space-space-unit);
   }
-  .notificationhead-navlink {
+  .searchhead-text1 {
     margin-left: 0;
     margin-bottom: var(--dl-space-space-unit);
   }
-  .notificationhead-text1 {
+  .searchhead-navlink {
     margin-left: 0;
     margin-bottom: var(--dl-space-space-unit);
   }
-  .notificationhead-navlink1 {
+  .searchhead-navlink1 {
     margin-left: 0;
     margin-bottom: var(--dl-space-space-unit);
   }
-  .notificationhead-root-class-name {
+  .searchhead-root-class-name {
     display: none;
   }
 }
 @media(max-width: 479px) {
-  .notificationhead-root-class-name {
+  .searchhead-root-class-name {
     display: none;
   }
 }
+</style>
