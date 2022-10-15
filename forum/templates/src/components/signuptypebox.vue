@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 export default {
   name: 'Signuptypebox',
   props: {
@@ -37,6 +39,41 @@ export default {
     text1: {
       type: String,
       default: 'Username',
+    },
+  },
+   data() {
+    return {
+      textinput_placeholder: "",
+      textinput_placeholder1: "",
+    };
+  },
+  methods: {
+    register(submitEvent) {
+      // data update
+      this.email = submitEvent.target.elements.textinput_placeholder.value;
+      this.password = submitEvent.target.elements.textinput_placeholder1.value;
+      // firebase registration
+      const auth = getAuth();
+      createUserWithEmailAndPassword(auth, this.email, this.password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user);
+          console.log("Registration completed");
+          this.$router.push("/");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+          let alert_2 = document.querySelector("#alert_2");
+          alert_2.classList.remove("d-none");
+          alert_2.innerHTML = errorMessage;
+          console.log(alert_2);
+        });
+    },
+    moveToLogin() {
+      this.$router.push("/");
     },
   },
 }

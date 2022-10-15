@@ -2,7 +2,7 @@
   <div class="logintypebox-container" v-bind:class="rootClassName">
     <div class="logintypebox-container1">
       <span class="logintypebox-text">{{ text1 }}</span>
-      <input type="text" :placeholder="textinput_placeholder" class="input" />
+      <input type="text" :placeholder="textinput_placeholder" class="input" name="email"/>
     </div>
     <div class="logintypebox-container2">
       <div class="logintypebox-container3">
@@ -12,22 +12,25 @@
         type="text"
         :placeholder="textinput_placeholder1"
         class="logintypebox-textinput1 input"
+        name="password"
       />
     </div>
   </div>
 </template>
 
 <script>
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
 export default {
   name: 'Logintypebox',
   props: {
     textinput_placeholder: {
       type: String,
-      default: 'placeholder',
+      default: 'email@address.com',
     },
     textinput_placeholder1: {
       type: String,
-      default: 'placeholder',
+      default: 'password123',
     },
     text1: {
       type: String,
@@ -37,6 +40,36 @@ export default {
     text: {
       type: String,
       default: 'Password',
+    },
+  },
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    login(submitEvent) {
+      this.email = submitEvent.target.elements.email.value;
+      this.password = submitEvent.target.elements.password.value;
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, this.email, this.password)
+        .then(() => {
+          this.$router.push("/search");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode);
+          console.log(errorMessage);
+          let alert_1 = document.querySelector("#alert_1");
+          alert_1.classList.remove("d-none");
+          alert_1.innerHTML = errorMessage;
+          console.log(alert_1);
+        });
+    },
+    moveToRegister() {
+      this.$router.push("/");
     },
   },
 }

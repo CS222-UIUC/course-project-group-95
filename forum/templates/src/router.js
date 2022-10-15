@@ -10,40 +10,63 @@ import Profile from './views/profile'
 import Notification from './views/notification'
 import './style.css'
 
+import { getAuth } from "firebase/auth";
+
 Vue.use(Router)
 Vue.use(Meta)
-export default new Router({
+
+const routes = [
+  {
+    name: 'login',
+    path: '/login',
+    component: Login,
+  },
+  {
+    name: 'Search',
+    path: '/search',
+    component: Search,
+  },
+  {
+    name: 'Home',
+    path: '/',
+    component: Home,
+  },
+  {
+    name: 'sign-up',
+    path: '/sign-up',
+    component: SignUp,
+  },
+  {
+    name: 'Profile',
+    path: '/profile',
+    component: Profile,
+  },
+  {
+    name: 'Notification',
+    path: '/notification',
+    component: Notification,
+  }
+];
+
+const router = new Router({
   mode: 'history',
-  routes: [
-    {
-      name: 'login',
-      path: '/login',
-      component: Login,
-    },
-    {
-      name: 'Search',
-      path: '/search',
-      component: Search,
-    },
-    {
-      name: 'Home',
-      path: '/',
-      component: Home,
-    },
-    {
-      name: 'sign-up',
-      path: '/sign-up',
-      component: SignUp,
-    },
-    {
-      name: 'Profile',
-      path: '/profile',
-      component: Profile,
-    },
-    {
-      name: 'Notification',
-      path: '/notification',
-      component: Notification,
-    },
-  ],
-})
+  routes,
+});
+
+// manage page access
+router.beforeEach((to, from, next) => {
+  const auth = getAuth();
+
+  if (to.matched.some((record) => record.meta.authRequired)) {
+    if (auth.currentUser) {
+      next();
+    } else {
+      alert("You've must been logged to access this area");
+      router.push("/");
+    }
+  } else {
+    next();
+  }
+});
+
+export default router;

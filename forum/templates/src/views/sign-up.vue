@@ -12,6 +12,7 @@
 
 <script>
 import AppSignuptypebox from '../components/signuptypebox'
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 export default {
   name: 'SignUp',
