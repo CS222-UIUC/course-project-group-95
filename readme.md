@@ -1,3 +1,1 @@
 With the development of modern technology, more and more students are showing interest in computer science. However, not everyone can get a systematic and complete computer science education. So we established this forum with the purpose of giving everyone the opportunity to communicate, learn, and share computer science techniques to help them achieve higher academic and professional careers in the future.
-
-Run service by: flask --app forum --debug run

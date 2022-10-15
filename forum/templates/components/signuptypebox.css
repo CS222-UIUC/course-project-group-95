@@ -1,0 +1,42 @@
+.signuptypebox-container {
+  width: 100%;
+  height: 226px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.signuptypebox-container1 {
+  width: 100%;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.signuptypebox-text {
+  padding-right: var(--dl-space-space-twounits);
+}
+.signuptypebox-container2 {
+  width: 100%;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.signuptypebox-container3 {
+  flex: 0 0 auto;
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.signuptypebox-text1 {
+  padding-right: var(--dl-space-space-twounits);
+}
+.signuptypebox-textinput1 {
+  padding-left: 12px;
+  padding-right: 22px;
+}
+
