@@ -1,37 +1,37 @@
 from flask import flash, redirect, render_template, request, Blueprint, url_for
+from ..models import authentication
+from sqlalchemy import exc
 
-from models import *
-from app import app
 
 blueprint = Blueprint('view', __name__)
 
 
-@app.route('/hello')
+@blueprint.route('/hello')
 def hello():
     return 'Hello, World!'
 
 
-@app.route('/')
+@blueprint.route('/')
 def index():
     return render_template('index.html')
 
 
-@app.route('/notification.html')
+@blueprint.route('/notification.html')
 def notification():
     return render_template('notification.html')
 
 
-@app.route('/profile.html')
+@blueprint.route('/profile.html')
 def profile():
     return render_template('profile.html')
 
 
-@app.route('/search.html')
+@blueprint.route('/search.html')
 def search():
     return render_template('search.html')
 
 
-@app.route('/register.html', methods=('GET', 'POST'))
+@blueprint.route('/register.html', methods=('GET', 'POST'))
 def register():
     if request.method == 'POST':
         username = request.form['username']
@@ -44,9 +44,9 @@ def register():
             message = 'Password is required.'
         else:
             try:
-                create_user(username, password)
-                return redirect(url_for('login'))
-            except:
+                authentication.create_user(username, password)
+                return redirect(url_for('view.login'))
+            except exc.IntegrityError:
                 message = 'Username exists.'
 
         flash(message)
@@ -54,7 +54,7 @@ def register():
     return render_template('auth/register.html')
 
 
-@app.route('/login.html', methods=('GET', 'POST'))
+@blueprint.route('/login.html', methods=('GET', 'POST'))
 def login():
 
     if request.method == 'POST':
@@ -74,14 +74,14 @@ def login():
     return render_template('auth/login.html')
 
 
-@app.route('/register/clean')
+@blueprint.route('/register/clean')
 def clean():
-    return delete_all_user()
+    return authentication.delete_all_user()
 
 
-@app.route('/list')
+@blueprint.route('/list/all_users')
 def list():
-    users = list_all_user()
+    users = authentication.list_all_user()
     for user in users:
         print(user)
     return "Check terminal for the list of all users."
