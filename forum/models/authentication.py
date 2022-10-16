@@ -1,7 +1,6 @@
 from flask import session
 from . import models
 from ..db import db
-# from sqlalchemy import
 
 
 def create_user(username, password):
