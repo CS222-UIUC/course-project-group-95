@@ -3,6 +3,7 @@ import pytest
 from forum.db import db
 
 
+# Declaring basic pytest configurations
 @pytest.fixture
 def app():
     app = create_app()
