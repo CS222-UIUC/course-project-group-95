@@ -3,6 +3,7 @@ from ..models import authentication
 from sqlalchemy import exc
 
 
+# Register blueprint
 blueprint = Blueprint('view', __name__)
 
 
@@ -31,6 +32,9 @@ def search():
     return render_template('search.html')
 
 
+# Register page:
+# Flash warning messages when username or password is not given or when username already exists
+# Redirect to login page if registered successfully
 @blueprint.route('/register.html', methods=('GET', 'POST'))
 def register():
     if request.method == 'POST':
@@ -54,6 +58,10 @@ def register():
     return render_template('auth/register.html')
 
 
+# Login page:
+# Flash warning messages when username or password is not given
+#                       or when username and password doesn't match
+# Redirect to index page and register user in session if logged in successfully
 @blueprint.route('/login.html', methods=('GET', 'POST'))
 def login():
 
@@ -79,17 +87,21 @@ def login():
     return render_template('auth/login.html')
 
 
+# Logout page
+# Clear session
 @blueprint.route('/logout')
 def logout():
     session.clear()
     return redirect(url_for('view.index'))
 
 
+# Only for development
 @blueprint.route('/register/clean')
 def clean():
     return authentication.delete_all_user()
 
 
+# Only for development
 @blueprint.route('/list/all_users')
 def list():
     users = authentication.list_all_user()
