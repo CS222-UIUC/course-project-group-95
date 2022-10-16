@@ -1,4 +1,4 @@
-from flask import flash, redirect, render_template, request, Blueprint, url_for
+from flask import flash, redirect, render_template, request, Blueprint, url_for, session
 from ..models import authentication
 from sqlalchemy import exc
 
@@ -66,12 +66,23 @@ def login():
             message = 'Username is required.'
         elif not password:
             message = 'Password is required.'
-        # else:
-        # Todo: Implement database query, save user id for use in other pages
+        else:
+            message = authentication.check_password(username, password)
+
+            if message != "Username doesn't exist." and message != "Password incorrect.":
+                session.clear()
+                session['user_id'] = message.username
+                return redirect(url_for('view.index'))
 
         flash(message)
 
     return render_template('auth/login.html')
+
+
+@blueprint.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('view.index'))
 
 
 @blueprint.route('/register/clean')

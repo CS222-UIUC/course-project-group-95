@@ -33,6 +33,17 @@
     <!--This is the head section-->
     <!-- <style> ... </style> -->
     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
+    <nav>
+      <ul>
+        {% if session.get('user_id') %}
+          <li><span>{{ 'Welcome, '+session.get('user_id') }}</span>
+          <li><a href="{{ url_for('view.logout') }}">Log Out</a>
+        {% else %}
+          <li><a href="{{ url_for('view.register') }}">Register</a>
+          <li><a href="{{ url_for('view.login') }}">Log In</a>
+        {% endif %}
+      </ul>
+    </nav>
   </head>
   <body>
     <div>
