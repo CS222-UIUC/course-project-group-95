@@ -1,6 +1,7 @@
 from flask import session
 from . import models
 from ..db import db
+# from sqlalchemy import
 
 
 def create_user(username, password):
@@ -13,11 +14,20 @@ def create_user(username, password):
 
 
 def check_password(username, password):
-    user = models.User.query.filter(username)
-    if user == None:
+    try:
+        user_with_correct_name = models.User.query.filter_by(
+            username=username).one()
+    except:
         return "Username doesn't exist."
-    # if user['password'] != password
-    return user
+    try:
+        user_with_correct_password = models.User.query.filter_by(
+            username=username, password=password).one()
+    except:
+        return "Password incorrect."
+
+    print(user_with_correct_password.username)
+
+    return user_with_correct_password
 
 
 def delete_all_user():
