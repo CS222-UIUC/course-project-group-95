@@ -2,45 +2,19 @@
 <html lang="en">
   <head>
     <title>Chat Forum</title>
-    <meta property="og:title" content="Chat Forum" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-    <style data-tag="reset-style-sheet">
-      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6 {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
-    </style>
-    <style data-tag="default-style-sheet">
-      html {
-        font-family: Inter;
-        font-size: 16px;
-      }
 
-      body {
-        font-weight: 400;
-        font-style:normal;
-        text-decoration: none;
-        text-transform: none;
-        letter-spacing: normal;
-        line-height: 1.15;
-        color: var(--dl-color-gray-black);
-        background-color: var(--dl-color-gray-white);
-
-      }
-    </style>
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
-      data-tag="font"
-    />
-    <!--This is the head section-->
-    <!-- <style> ... </style> -->
     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
     <nav>
       <ul>
         {% if session.get('user_id') %}
           <li><span>{{ 'Welcome, '+session.get('user_id') }}</span>
-          <li><a href="{{ url_for('view.logout') }}">Log Out</a>
+          <li><a href="{{ url_for('post.create_post') }}">New post</a>
+          <li><a href="{{ url_for('user.logout') }}">Log Out</a>
         {% else %}
-          <li><a href="{{ url_for('view.register') }}">Register</a>
-          <li><a href="{{ url_for('view.login') }}">Log In</a>
+          <li><a href="{{ url_for('user.register') }}">Register</a>
+          <li><a href="{{ url_for('user.login') }}">Log In</a>
         {% endif %}
       </ul>
     </nav>
@@ -50,13 +24,9 @@
       <link href="{{url_for('static',filename='home.css')}}" rel="stylesheet" />
 
       <div class="home-container">
-        <header data-role="Accordion" class="home-header">
           <span class="home-text">
             <span>Chat Forum</span>
-            <br />
           </span>
-          <div class="home-separator"></div>
-          <nav class="home-nav"></nav>
           <nav class="homehead-nav homehead-root-class-name18">
             <a href="index.html" class="homehead-text"><span>Home</span></a>
             <a href="search.html" class="homehead-navlink">
@@ -93,36 +63,26 @@
             </div>
           </div>
         </header>
-        <div class="home-post-container home-post-root-class-name">
-          <span class="home-post-text"><span>Title</span></span>
-          <span class="home-post-text1">
-            <span>
-              contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent
-            </span>
-          </span>
-        </div>
-        <div class="home-post-container home-post-root-class-name1">
-          <span class="home-post-text"><span>Title</span></span>
-          <span class="home-post-text1">
-            <span>
-              contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent
-            </span>
-          </span>
-        </div>
-        <div class="home-post-container home-post-root-class-name2">
-          <span class="home-post-text"><span>Title</span></span>
-          <span class="home-post-text1">
-            <span>
-              contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent
-            </span>
-          </span>
-        </div>
-        <a href="login.html" class="home-navlink">login</a>
+        {% for post in posts %}
+        <article class="post">
+          <header>
+            <div>
+              <a class="action" href="{{ url_for('post.view_post', id=post.id) }}">{{post.title}}</a>
+              <div class="about">by {{ post['author'] }} on {{ post['create_datetime'].strftime('%Y-%m-%d %H:%M:%S') }}</div>
+            </div>
+            {% if session.get('user_id') == post['author'] %}
+              <a class="action" href="{{ url_for('post.edit_post', id=post['id']) }}">Edit</a>
+            {% endif %}
+          </header>
+          <p class="body">{{ post['content'] }}</p>
+        </article>
+        {% if not loop.last %}
+          <hr>
+        {% endif %}
+      {% endfor %}
+
       </div>
     </div>
-    <script
-      data-section-id="header"
-      src="https://unpkg.com/@teleporthq/teleport-custom-scripts"
-    ></script>
+
   </body>
 </html>

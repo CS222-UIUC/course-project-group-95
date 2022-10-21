@@ -1,4 +1,3 @@
-from flask import session
 from . import models
 from ..db import db
 
@@ -25,8 +24,6 @@ def check_password(username, password):
             username=username, password=password).one()
     except:
         return "Password incorrect."
-
-    print(user_with_correct_password.username)
 
     return user_with_correct_password
 

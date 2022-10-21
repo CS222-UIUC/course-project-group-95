@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>post.title</title>
+
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
+  </head>
+  <body>
+    <a class="action" href="{{ url_for('index.index') }}">Back</a>
+    <p>title: {{post.title}}</p>
+    <p>author: {{post.author}}</p>
+    <p>create_datetime: {{post.create_datetime}}</p>
+    <p>Content: {{post.content}}</p>
+ 
+
+  </body>
+</html>
