@@ -4,9 +4,78 @@
     <title>login - Chat Forum</title>
     <meta property="og:title" content="login - Chat Forum" />
 
+    <!-- container style -->
+    <style type="text/css">
+
+      body{
+        margin: 0px;
+      }
+
+      div#container{
+        width: 100%;
+        height: 100%;
+      }
+
+      div#c_login{
+        width: 100%;
+        height: 700px;
+        line-height: 700px;
+        text-align: center;
+      }
+
+      div#c_go_register{
+        width: 100%;
+        height: 150px;
+        text-align: center;
+      }
+
+      div#c_inputbox{
+        width:100%;
+        height:75px;
+      }
+
+      label{
+        width: 100px;
+        text-align: right;
+        display: inline-block;
+        padding-right: 20px;
+
+        font-family: Inter;
+        font-size: 20px;
+
+      }
+
+      #username
+      {
+        height:30px;
+        width:300px;
+        font-size:14pt;
+      }
+
+      #password
+      {
+        height:30px;
+        width:300px;
+        font-size:14pt;
+      }
+
+      #submit
+      {
+        height:30px;
+        width:90px;
+        font-size:14pt;
+      }
+
+      
+
+
+    </style>
+<!-- 
     <style data-tag="reset-style-sheet">
       html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6 {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
     </style>
+
+
     <style data-tag="default-style-sheet">
       html {
         font-family: Inter;
@@ -24,7 +93,9 @@
         background-color: var(--dl-color-gray-white);
 
       }
-    </style>
+    </style> -->
+
+
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
@@ -34,31 +105,54 @@
     <!-- <style> ... </style> -->
     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
   </head>
-  <body>
-    <div>
-      <link href="{{url_for('static',filename='login.css')}}" rel="stylesheet" />
 
-     
+
+
+  <body>
+    <div id = "container">
+
+      <!-- div login -->
+      <div id = "c_login">
+        <link href="{{url_for('static',filename='login.css')}}" rel="stylesheet" />
         <form method="post">
-          <label for="username">Username</label>
-          <input name="username" id="username">
-          <label for="password">Password</label>
-          <input type="password" name="password" id="password">
-          <input type="submit" value="Login">
+
+          <div id = "c_inputbox">
+            <label for="username">Username</label>
+            <input name="username" id="username">
+          </div>
+
+          <div id = "c_inputbox">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password">
+          </div>
+          
+          <div id = "c_inputbox">
+            <input type="submit" value="Login" id="submit">
+          </div>
+
         </form>
-        {% for message in get_flashed_messages() %}
-        <div class="flash">{{ message }}</div>
-        {% endfor %}
-   
+
+          {% for message in get_flashed_messages() %}
+          <div class="flash">{{ message }}</div>
+          {% endfor %}
+      </div>
+
+      
+      <!-- div register -->
+      <div id = "c_go_register">
         <a href="register.html" class="login-navlink1">
           <span class="login-text3">Register</span>
           <br />
         </a>
       </div>
- 
+
+    </div>
+
     <script
-      data-section-id="header"
-      src="https://unpkg.com/@teleporthq/teleport-custom-scripts"
+    data-section-id="header"
+    src="https://unpkg.com/@teleporthq/teleport-custom-scripts"
     ></script>
+
   </body>
+
 </html>
