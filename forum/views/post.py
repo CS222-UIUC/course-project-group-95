@@ -7,17 +7,42 @@ from sqlalchemy import exc
 blueprint = Blueprint('post', __name__, url_prefix='/post/')
 
 
-@blueprint.route('/edit')
+# Edit post page for given post_id
+@blueprint.route('/edit', methods=('GET', 'POST'))
 def edit_post():
-    return "edit post"
+    id = request.args.to_dict()['id']
+    if request.method == 'POST':
+        title = request.form['title']
+        content = request.form['content']
+        message = None
+
+        if not title:
+            message = 'Title is required.'
+        else:
+            # try:
+            post.update_post(title, content, id)
+            return redirect(url_for('index.index'))
+            # except:
+
+        flash(message)
+    return render_template("post/edit_post.html", post=post.get_post(id))
 
 
-@blueprint.route('/view')
+# View post page
+# If session user equals to author, button for delete and edit will be shown
+@blueprint.route('/view', methods=('GET', 'POST'))
 def view_post():
     id = request.args.to_dict()['id']
+
+    if request.method == 'POST':
+
+        post.delete_post(id)
+
+        return redirect(url_for('index.index'))
     return render_template("post/post.html", post=post.get_post(id))
 
 
+# Create post page
 @blueprint.route('/create', methods=('GET', 'POST'))
 def create_post():
     if request.method == 'POST':
