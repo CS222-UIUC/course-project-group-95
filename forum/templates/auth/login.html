@@ -109,7 +109,7 @@
 
   <body>
     <div id = "container">
-
+      <a class="action" href="{{ url_for('index.index') }}">Back to index page</a>
       <!-- div login -->
       <div id = "c_login">
         <link href="{{url_for('static',filename='login.css')}}" rel="stylesheet" />
@@ -130,7 +130,7 @@
           </div>
 
         </form>
-
+        
           {% for message in get_flashed_messages() %}
           <div class="flash">{{ message }}</div>
           {% endfor %}
@@ -139,11 +139,13 @@
       
       <!-- div register -->
       <div id = "c_go_register">
-        <a href="register.html" class="login-navlink1">
+        <a href="register" class="login-navlink1">
           <span class="login-text3">Register</span>
           <br />
         </a>
       </div>
+
+      
 
     </div>
 

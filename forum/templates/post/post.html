@@ -6,12 +6,25 @@
     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
   </head>
   <body>
+    {% if session.get('user_id') %}
+      <li><span>{{ 'Welcome, '+ session.get('user_id') }}</span>
+    {% endif %}
     <a class="action" href="{{ url_for('index.index') }}">Back</a>
-    <p>title: {{post.title}}</p>
-    <p>author: {{post.author}}</p>
-    <p>create_datetime: {{post.create_datetime}}</p>
+    <p>Title: {{post.title}}</p>
+    <p>Author: {{post.author}}</p>
+    <p>Create_datetime: {{post.create_datetime}}</p>
     <p>Content: {{post.content}}</p>
- 
+    
+
+    {% if session.get('user_id') == post['author'] %}
+      <a class="action" href="{{ url_for('post.edit_post', id=post['id']) }}">Edit</a>
+      <div>
+        <form method="post">
+          <input type="hidden" id="id" name="id" value="{{post.id}}">
+          <input type="submit" value="Delete">
+        </form>
+    </div>
+    {% endif %}
 
   </body>
 </html>

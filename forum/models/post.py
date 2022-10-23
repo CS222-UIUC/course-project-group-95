@@ -14,6 +14,7 @@ def get_post(id):
     return models.Post.query.filter_by(id=id).one()
 
 
+# Create a new post using the title, content, and author_id parameters
 def create_post(title, content, user_id):
     tz = pytz.timezone('US/Central')
     cur_time = datetime.now(tz=tz)
@@ -23,3 +24,21 @@ def create_post(title, content, user_id):
     db.session.commit()
 
     return new_post
+
+
+# Update the post with id as post_id using new title and content
+def update_post(title, content, id):
+    models.Post.query.filter_by(id=id).update(
+        {'title': title, 'content': content})
+    db.session.commit()
+
+
+# Delete the post with id as post_id
+def delete_post(id):
+    models.Post.query.filter_by(id=id).delete()
+    db.session.commit()
+
+
+# Delete all post
+def delete_all_post():
+    models.Post.query.delete()
