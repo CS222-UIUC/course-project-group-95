@@ -5,26 +5,26 @@ import os
 
 # Test server can handle get request to register.html
 def test_register_page(client):
-    response = client.get('/register.html')
+    response = client.get('/user/register')
     assert (response.status_code == 200)
 
 
 # Test server can handle get request to login.html
 def test_login_page(client):
-    response = client.get('/login.html')
+    response = client.get('/user/login')
     assert (response.status_code == 200)
 
 
 # Test server can handle get request to logout
 def test_logout_page(client):
-    response = client.get('/logout')
+    response = client.get('/user/logout')
     assert (response.status_code == 302)
 
 
 # Test register page can warn username not available
 def test_register_no_username(client):
     response = client.post(
-        '/register.html', data={'username': '', 'password': ''})
+        '/user/register', data={'username': '', 'password': ''})
     assert (response.status_code == 200)
     messages = get_flashed_messages()
     assert (messages[0] == 'Username is required.')
@@ -33,7 +33,7 @@ def test_register_no_username(client):
 # Test register page can warn password not available
 def test_register_no_password(client):
     response = client.post(
-        '/register.html', data={'username': 'zhangsan', 'password': ''})
+        '/user/register', data={'username': 'zhangsan', 'password': ''})
     assert (response.status_code == 200)
     messages = get_flashed_messages()
     assert (messages[0] == 'Password is required.')
@@ -42,7 +42,7 @@ def test_register_no_password(client):
 # Test register user
 def test_register(client):
     response = client.post(
-        '/register.html', data={'username': 'zhangsan', 'password': '123'})
+        '/user/register', data={'username': 'zhangsan', 'password': '123'})
     assert (response.status_code == 302)
     messages = get_flashed_messages()
     assert (messages == [])
@@ -52,12 +52,12 @@ def test_register(client):
 # Test register with existing username
 def test_register_existing_user(client):
     response = client.post(
-        '/register.html', data={'username': 'zhangsan', 'password': '123'})
+        '/user/register', data={'username': 'zhangsan', 'password': '123'})
     assert (response.status_code == 302)
     messages = get_flashed_messages()
     assert (messages == [])
     response = client.post(
-        '/register.html', data={'username': 'zhangsan', 'password': '123'})
+        '/user/register', data={'username': 'zhangsan', 'password': '123'})
     assert (response.status_code == 200)
     messages = get_flashed_messages()
     assert (messages[0] == 'Username exists.')
@@ -67,7 +67,7 @@ def test_register_existing_user(client):
 # Test login page can warn username not available
 def test_login_no_username(client):
     response = client.post(
-        '/login.html', data={'username': '', 'password': ''})
+        '/user/login', data={'username': '', 'password': ''})
     assert (response.status_code == 200)
     messages = get_flashed_messages()
     assert (messages[0] == 'Username is required.')
@@ -76,7 +76,7 @@ def test_login_no_username(client):
 # Test login page can warn password not available
 def test_login_no_password(client):
     response = client.post(
-        '/login.html', data={'username': 'zhangsan', 'password': ''})
+        '/user/login', data={'username': 'zhangsan', 'password': ''})
     assert (response.status_code == 200)
     messages = get_flashed_messages()
     assert (messages[0] == 'Password is required.')
@@ -85,12 +85,12 @@ def test_login_no_password(client):
 # Test login username not exist
 def test_login_username_nonexist(client):
     response = client.post(
-        '/register.html', data={'username': 'zhangsan', 'password': '123'})
+        '/user/register', data={'username': 'zhangsan', 'password': '123'})
     assert (response.status_code == 302)
     messages = get_flashed_messages()
     assert (messages == [])
     response = client.post(
-        '/login.html', data={'username': 'lisi', 'password': '123'})
+        '/user/login', data={'username': 'lisi', 'password': '123'})
     assert (response.status_code == 200)
     messages = get_flashed_messages()
     assert (messages[0] == "Username doesn't exist.")
@@ -100,12 +100,12 @@ def test_login_username_nonexist(client):
 # Test login incorrect password
 def test_login_password_incorrect(client):
     response = client.post(
-        '/register.html', data={'username': 'zhangsan', 'password': '123'})
+        '/user/register', data={'username': 'zhangsan', 'password': '123'})
     assert (response.status_code == 302)
     messages = get_flashed_messages()
     assert (messages == [])
     response = client.post(
-        '/login.html', data={'username': 'zhangsan', 'password': '12345'})
+        '/user/login', data={'username': 'zhangsan', 'password': '12345'})
     assert (response.status_code == 200)
     messages = get_flashed_messages()
     assert (messages[0] == "Password incorrect.")
@@ -116,17 +116,33 @@ def test_login_password_incorrect(client):
 def test_login_and_logout(client):
     assert (session.get('user_id') == None)
     response = client.post(
-        '/register.html', data={'username': 'zhangsan', 'password': '123'})
+        '/user/register', data={'username': 'zhangsan', 'password': '123'})
     assert (response.status_code == 302)
     messages = get_flashed_messages()
     assert (messages == [])
     response = client.post(
-        '/login.html', data={'username': 'zhangsan', 'password': '123'})
+        '/user/login', data={'username': 'zhangsan', 'password': '123'})
     assert (response.status_code == 302)
     messages = get_flashed_messages()
     assert (messages == [])
     assert (session.get('user_id') == 'zhangsan')
-    response = client.get('/logout')
+    response = client.get('/user/logout')
     assert (response.status_code == 302)
     assert (session.get('user_id') == None)
     delete_all_user()
+
+
+# Test list all users
+def test_list_all_users(client):
+    response = client.post(
+        '/user/register', data={'username': 'zhangsan', 'password': '123'})
+    response = client.post(
+        '/user/register', data={'username': 'lisi', 'password': '123'})
+    response = client.get('/user/list')
+    assert (response.data == b'["zhangsan","lisi"]\n')
+
+    response = client.get('user/clean')
+    assert (response.status_code == 200)
+
+    response = client.get('/user/list')
+    assert (response.data == b'[]\n')
