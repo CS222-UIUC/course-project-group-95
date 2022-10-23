@@ -31,5 +31,5 @@ jobs:
         pytest ./tests/
     - name: Calculate test coverage
       run: |
-        coverage run --source=. -m pytest
+        coverage run --source=forum/ -m pytest
         coverage report -m
