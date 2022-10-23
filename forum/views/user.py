@@ -70,16 +70,17 @@ def logout():
     return redirect(url_for('index.index'))
 
 
-# Only for development
+# Delete all users
 @blueprint.route('/clean')
 def clean():
     return authentication.delete_all_user()
 
 
-# Only for development
+# List all users
 @blueprint.route('/list')
 def list():
     users = authentication.list_all_user()
+    user_list = []
     for user in users:
-        print(user)
-    return "Check terminal for the list of all users."
+        user_list.append(user.username)
+    return user_list

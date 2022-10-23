@@ -30,16 +30,18 @@ def edit_post():
 
 # View post page
 # If session user equals to author, button for delete and edit will be shown
-@blueprint.route('/view', methods=('GET', 'POST'))
+@blueprint.route('/view')
 def view_post():
     id = request.args.to_dict()['id']
-
-    if request.method == 'POST':
-
-        post.delete_post(id)
-
-        return redirect(url_for('index.index'))
     return render_template("post/post.html", post=post.get_post(id))
+
+
+# Delete post page, redirects to index page
+@blueprint.route('/delete')
+def delete_post():
+    id = request.args.to_dict()['id']
+    post.delete_post(id)
+    return redirect(url_for('index.index'))
 
 
 # Create post page

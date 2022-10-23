@@ -42,3 +42,4 @@ def delete_post(id):
 # Delete all post
 def delete_all_post():
     models.Post.query.delete()
+    db.session.commit()
