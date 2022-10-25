@@ -1,29 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Create post - Chat Forum</title>
 
-    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
-  </head>
-  <body>
-    <div>
-        <a class="action" href="{{ url_for('index.index') }}">Back</a>
+<head>
+  <title>Create post - Chat Forum</title>
 
-      <form method="post">
-        <label for="title">Title</label>
-        <input name="title" id="title">
-        <br>
-        <label for="content">Content</label>
-        <input name="content" id="content">
-        <br>
-        <input type="submit" value="Post">
-      </form>
-      {% for message in get_flashed_messages() %}
-      <div class="flash">{{ message }}</div>
-      {% endfor %}
+  <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
+</head>
+
+<body>
+  <div>
+    <a class="action" href="{{ url_for('index.index') }}">Back</a>
+
+    <form method="post">
+      <label for="title">Title</label>
+      <input name="title" id="title">
+      <br>
+      <label for="content">Content</label>
+      <input name="content" id="content">
+      <br>
+      <input type="submit" value="Post">
+    </form>
+    {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+    {% endfor %}
 
 
-    </div>
+  </div>
 
-  </body>
+</body>
+
 </html>
