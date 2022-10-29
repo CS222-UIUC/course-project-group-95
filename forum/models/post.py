@@ -43,3 +43,14 @@ def delete_post(id):
 def delete_all_post():
     models.Post.query.delete()
     db.session.commit()
+
+
+# Search post by keyword,
+# keyword could be part of the post's title, content, or author
+def search_by_keyword(keyword):
+    search = "%{}%".format(keyword)
+    posts = models.Post.query.filter(models.Post.title.like(search)).union(
+        models.Post.query.filter(models.Post.content.like(search))).union(
+            models.Post.query.filter(models.Post.author.like(search))).order_by(
+                models.Post.create_datetime.desc())
+    return posts

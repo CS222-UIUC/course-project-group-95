@@ -1,5 +1,5 @@
 from flask import Flask
-from .views import user, post, index
+from .views import user, post, index, message
 
 
 # Flask factory mode to create the app
@@ -23,6 +23,7 @@ def create_app(test_config=None):
     app.register_blueprint(user.blueprint)
     app.register_blueprint(post.blueprint)
     app.register_blueprint(index.blueprint)
+    app.register_blueprint(message.blueprint)
     # app.register_blueprint(views.blueprint)
 
     return app
