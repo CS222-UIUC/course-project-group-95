@@ -55,10 +55,8 @@ def create_post():
         if not title:
             message = 'Title is required.'
         else:
-            # try:
             post.create_post(title, content, session.get('user_id'))
             return redirect(url_for('index.index'))
-            # except:
 
         flash(message)
 
