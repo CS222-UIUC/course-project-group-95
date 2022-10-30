@@ -30,9 +30,3 @@ def test_notification(client):
 def test_profile(client):
     response = client.get('/profile.html')
     assert (response.status_code == 200)
-
-
-# Test server can handle get request to search.html
-def test_search(client):
-    response = client.get('/search.html')
-    assert (response.status_code == 200)

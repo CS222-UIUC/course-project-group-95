@@ -40,3 +40,10 @@ def send_message(sender, receiver, content):
     db.session.commit()
 
     return new_message
+
+
+# Delete all private message
+# For testing
+def delete_all_post():
+    models.Message.query.delete()
+    db.session.commit()

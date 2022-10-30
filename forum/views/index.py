@@ -29,16 +29,11 @@ def search():
     posts = post.list_all_posts()
     if request.method == 'POST':
         keyword = request.form['keyword']
-        message = None
 
         if not keyword:
-
             return render_template("index.html", posts=posts)
         else:
-            # try:
             posts = post.search_by_keyword(keyword)
             return render_template("index.html", posts=posts)
-            # except:
 
-        flash(message)
     return render_template("index.html", posts=posts)
