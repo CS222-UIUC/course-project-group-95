@@ -20,19 +20,13 @@ def test_homepage(client):
     assert (response.status_code == 200)
 
 
-# Test server can handle get request to notification.html
+# Test server can handle get request to message
 def test_notification(client):
-    response = client.get('/notification.html')
+    response = client.get('/pm/message')
     assert (response.status_code == 200)
 
 
 # Test server can handle get request to profile.html
 def test_profile(client):
     response = client.get('/profile.html')
-    assert (response.status_code == 200)
-
-
-# Test server can handle get request to search.html
-def test_search(client):
-    response = client.get('/search.html')
     assert (response.status_code == 200)

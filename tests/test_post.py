@@ -121,3 +121,34 @@ def test_view_and_delete_post(client):
 
     delete_all_user()
     delete_all_post()
+
+
+# Test search function
+def test_search(client):
+    response = client.post(
+        '/user/register', data={'username': 'zhangsan', 'password': '123'})
+    assert (response.status_code == 302)
+    messages = get_flashed_messages()
+    assert (messages == [])
+    response = client.post(
+        '/user/login', data={'username': 'zhangsan', 'password': '123'})
+    assert (response.status_code == 302)
+    messages = get_flashed_messages()
+    assert (messages == [])
+    response = client.post(
+        '/search', data={'keyword': 'post title'})
+    assert (response.status_code == 200)
+    response = client.post(
+        '/post/create', data={'title': 'post title', 'content': 'this is a post'})
+    response = client.post(
+        '/search', data={'keyword': 'post title'})
+    assert (response.status_code == 200)
+    response = client.post(
+        '/search', data={'keyword': ''})
+    assert (response.status_code == 200)
+    response = client.get(
+        '/search')
+    assert (response.status_code == 200)
+
+    delete_all_user()
+    delete_all_post()
