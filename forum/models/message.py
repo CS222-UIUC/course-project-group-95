@@ -16,6 +16,18 @@ def get_connections(user):
         models.Connection.last_contact_datetime.desc()).with_entities(db.column('username')).all()
 
 
+# Add connection between user1 and user2
+def add_connection(user1, user2):
+    tz = pytz.timezone('US/Central')
+    cur_time = datetime.now(tz=tz)
+    new_connection = models.Connection(user1, user2, cur_time)
+
+    db.session.add(new_connection)
+    db.session.commit()
+
+    return new_connection
+
+
 # Return all the message history between user1 and user2
 def get_message_history(user1, user2):
     return models.Message.query.filter_by(sender=user1, receiver=user2).union(
