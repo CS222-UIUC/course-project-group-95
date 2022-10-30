@@ -56,8 +56,7 @@ class Connection(db.Model):
     second = Column(String)
     last_contact_datetime = Column(DateTime)
 
-    def __init__(self, sender, receiver, content, last_contact_datetime):
-        self.sender = sender
-        self.receiver = receiver
-        self.content = content
+    def __init__(self, first, second, last_contact_datetime):
+        self.first = first
+        self.second = second
         self.last_contact_datetime = last_contact_datetime
