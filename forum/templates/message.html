@@ -5,38 +5,178 @@
     <title>Message - Chat Forum</title>
 
     <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
+
+
+    <style type="text/css">
+
+        body {
+            margin: 0px;
+            height: 100%;
+            width: 100%;
+        }
+
+        div#container {
+            width: 100%;
+            height: 100%;
+        }
+
+        div#userlist {
+            width: 25%;
+            height:825px;
+            background-color:antiquewhite;
+            float:left;
+        }
+
+        div#message{
+            width: 75%;
+            height: 825px;
+            float:left;
+        }
+
+        div#message_display {
+            width: 100%;
+            height: 495px;
+        }
+
+        div#message_send {
+            width: 100%;
+            height: 330px;
+        }
+
+        div#message_send_content {
+            width: 90%;
+            height: 330px;;
+            float:left;
+        }
+
+        div#message_send_send{
+            width: 10%;
+            height: 330px;;
+            float:left;
+        }
+
+
+        div#headline {
+            width: 100%;
+            height: 150px;
+            background-color:aquamarine;
+            font-size: 20px;
+        }
+
+        div#mainbody {
+            width: 100%;
+            height: 825px;
+            background-color:aliceblue
+        }
+
+        #content {
+            width: 100%;
+            height: 309px;
+        }
+
+        #send {
+            width: 100%;
+            height: 315px;
+        }
+
+        div#friendname{
+            width: 100%;
+            height: 40px;
+            text-align: center;
+            font-size: 30px;
+            padding-top: 10px;
+        }
+
+        div#back{
+            width: 5%;
+            line-height: 50px;
+            text-align: center;
+        }
+
+
+
+
+    </style>
 </head>
 
+
+
 <body>
-    <div>
-        <a class="action" href="{{ url_for('index.index') }}">Back</a>
-        <br>
-        <br>
-        <br>
+    <div id = "container"> 
+        <!-- headline -->
+        <div id = "headline">
+            <div id = "back">
+                <a class="action" href="{{ url_for('index.index') }}">Back</a>
+            </div>
+        </div>
+    
+        <!-- mainbody -->
+        <div id = "mainbody">
 
-        {% for connection in connections %}
-        <article class="message">
-            <header>
-                <div>
-                    <a class="action"
-                        href="{{ url_for('message.message_index', conversation=connection.username) }}">{{connection.username}}</a>
+            <!-- left->userlist -->
+            <div id = "userlist">
+                {% for connection in connections %}
+                <article class="message">
+                    <header>
+                        <div id = friendname>
+                            <a class="action"
+                                href="{{ url_for('message.message_index', conversation=connection.username) }}">{{connection.username}}</a>
+                        </div>
+
+                    </header>
+
+                </article>
+
+            </div>
+
+            <!-- right->message -->
+            <div id = "message">
+                {% if not loop.last %}
+                <hr>
+                {% endif %}
+                {% endfor %}
+
+                {% if not cur_conversation%}
+
+                {% else %}
+
+                <div id = "message_display">
+                    <p>Messages with {{cur_conversation}}:</p>
+                    {% if not message_history%}
+                    <p>Also blank here</p>
+                    {% else %}
+                    {% for message in message_history %}
+                    {{message.sender}} says: {{message.content}} at {{message.sent_datetime}}
+                    {% if not loop.last %}
+                    <!-- <hr> -->
+                    {% endif %}
+                    {% endfor %}
+                    
+                    {% endif %}
                 </div>
+                
+                <div id = "message_send">
 
-            </header>
+                    <form method="post">
+                        <div id = "message_send_content">
+                            <input type="text" name="content" id="content">
+                        </div>
 
-        </article>
-        {% if not loop.last %}
-        <hr>
-        {% endif %}
-        {% endfor %}
-
-        {% if not cur_conversation%}
-        <p>Place blank here</p>
-        {% else %}
-        <p>Messages with {{cur_conversation}}:</p>
+                        <div id = "message_send_send">
+                            <input type="submit" value="Send" id = "send">
+                        </div>
+                    </form>
+                </div>
+                {% endif %}
 
 
-        {% if not message_history%}
+                
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <!-- {% if not message_history%}
         <p>Also blank here</p>
         {% else %}
         {% for message in message_history %}
@@ -53,10 +193,7 @@
             <input name="content" id="content">
             <br>
             <input type="submit" value="Send">
-        </form>
-
-
-        {% endif %}
+        </form> -->
 
 
 
