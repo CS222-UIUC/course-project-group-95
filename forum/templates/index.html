@@ -1,84 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Chat Forum</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
-    <nav>
-      <ul>
-        {% if session.get('user_id') %}
-          <li><span>{{ 'Welcome, '+session.get('user_id') }}</span>
-          <li><a href="{{ url_for('post.create_post') }}">New post</a>
-          <li><a href="{{ url_for('user.logout') }}">Log Out</a>
+<head>
+  <title>Chat Forum</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
+  <nav>
+    <ul>
+      {% if session.get('user_id') %}
+      <li><span>{{ 'Welcome, '+session.get('user_id') }}</span>
+      <li><a href="{{ url_for('post.create_post') }}">New post</a>
+      <li><a href="{{ url_for('user.logout') }}">Log Out</a>
         {% else %}
-          <li><a href="{{ url_for('user.register') }}">Register</a>
-          <li><a href="{{ url_for('user.login') }}">Log In</a>
+      <li><a href="{{ url_for('user.register') }}">Register</a>
+      <li><a href="{{ url_for('user.login') }}">Log In</a>
         {% endif %}
-      </ul>
-    </nav>
-  </head>
-  <body>
-    <div>
-      <link href="{{url_for('static',filename='home.css')}}" rel="stylesheet" />
+    </ul>
+  </nav>
+</head>
 
-      <div class="home-container">
-          <span class="home-text">
-            <span>Chat Forum</span>
-          </span>
-          <nav class="homehead-nav homehead-root-class-name18">
-            <a href="index.html" class="homehead-text"><span>Home</span></a>
-            <a href="search.html" class="homehead-navlink">
-              <span>Search</span>
-            </a>
-            <a href="notification.html" class="homehead-navlink1">
-              <span>Notifications</span>
-            </a>
-            <a href="profile.html" class="homehead-navlink2">
-              <span>Profile</span>
-            </a>
-          </nav>
-          <div data-type="AccordionHeader" class="home-accordion-header">
-            <svg viewBox="0 0 1024 1024" class="home-icon">
-              <path
-                d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z"
-              ></path>
-            </svg>
-          </div>
-          <div data-type="AccordionContent" class="home-accordion-content">
-            <div class="home-nav1">
-              <nav class="homehead-nav homehead-root-class-name20">
-                <a href="index.html" class="homehead-text"><span>Home</span></a>
-                <a href="search.html" class="homehead-navlink">
-                  <span>Search</span>
-                </a>
-                <a href="notification.html" class="homehead-navlink1">
-                  <span>Notifications</span>
-                </a>
-                <a href="profile.html" class="homehead-navlink2">
-                  <span>Profile</span>
-                </a>
-              </nav>
+<body>
+  <div>
+    <link href="{{url_for('static',filename='home.css')}}" rel="stylesheet" />
+
+
+
+
+    <form action="{{url_for('index.search')}}" method="post">
+      <input name="keyword" id="keyword" placeholder="Enter keyword">
+      <input type="submit" value="Search">
+    </form>
+
+
+    <div class="home-container">
+      <span class="home-text">
+        <span>Chat Forum</span>
+      </span>
+      <nav class="homehead-nav homehead-root-class-name18">
+        <a href="index.html" class="homehead-text"><span>Home</span></a>
+        <a href="search.html" class="homehead-navlink">
+          <span>Search</span>
+        </a>
+        <a href="{{url_for('message.message_index')}}" class="homehead-navlink1">
+          <span>Message</span>
+        </a>
+        <a href="profile.html" class="homehead-navlink2">
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div data-type="AccordionHeader" class="home-accordion-header">
+        <svg viewBox="0 0 1024 1024" class="home-icon">
+          <path
+            d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z">
+          </path>
+        </svg>
+      </div>
+
+      </header>
+      {% for post in posts %}
+      <article class="post">
+        <header>
+          <div>
+            <a class="action" href="{{ url_for('post.view_post', id=post.id) }}">{{post.title}}</a>
+            <div class="about">by {{ post['author'] }} on {{ post['create_datetime'].strftime('%Y-%m-%d %H:%M:%S') }}
             </div>
           </div>
         </header>
-        {% for post in posts %}
-        <article class="post">
-          <header>
-            <div>
-              <a class="action" href="{{ url_for('post.view_post', id=post.id) }}">{{post.title}}</a>
-              <div class="about">by {{ post['author'] }} on {{ post['create_datetime'].strftime('%Y-%m-%d %H:%M:%S') }}</div>
-            </div>
-          </header>
-          <p class="body">{{ post['content'] }}</p>
-        </article>
-        {% if not loop.last %}
-          <hr>
-        {% endif %}
+        <p class="body">{{ post['content'] }}</p>
+      </article>
+      {% if not loop.last %}
+      <hr>
+      {% endif %}
       {% endfor %}
 
-      </div>
     </div>
+  </div>
 
-  </body>
+</body>
+
 </html>

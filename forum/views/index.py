@@ -18,16 +18,27 @@ def hello():
     return 'Hello, World!'
 
 
-@blueprint.route('/notification.html')
-def notification():
-    return render_template('notification.html')
-
-
 @blueprint.route('/profile.html')
 def profile():
     return render_template('profile.html')
 
 
-@blueprint.route('/search.html')
+# Search post using keywords
+@blueprint.route('/search', methods=('GET', 'POST'))
 def search():
-    return render_template('search.html')
+    posts = post.list_all_posts()
+    if request.method == 'POST':
+        keyword = request.form['keyword']
+        message = None
+
+        if not keyword:
+
+            return render_template("index.html", posts=posts)
+        else:
+            # try:
+            posts = post.search_by_keyword(keyword)
+            return render_template("index.html", posts=posts)
+            # except:
+
+        flash(message)
+    return render_template("index.html", posts=posts)

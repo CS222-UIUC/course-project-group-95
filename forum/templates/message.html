@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Message - Chat Forum</title>
+
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
+</head>
+
+<body>
+    <div>
+        <a class="action" href="{{ url_for('index.index') }}">Back</a>
+        <br>
+        <br>
+        <br>
+
+        {% for connection in connections %}
+        <article class="message">
+            <header>
+                <div>
+                    <a class="action"
+                        href="{{ url_for('message.message_index', conversation=connection.username) }}">{{connection.username}}</a>
+                </div>
+
+            </header>
+
+        </article>
+        {% if not loop.last %}
+        <hr>
+        {% endif %}
+        {% endfor %}
+
+        {% if not cur_conversation%}
+        <p>Place blank here</p>
+        {% else %}
+        <p>Messages with {{cur_conversation}}:</p>
+
+
+        {% if not message_history%}
+        <p>Also blank here</p>
+        {% else %}
+        {% for message in message_history %}
+        {{message.sender}} says: {{message.content}} at {{message.sent_datetime}}
+        {% if not loop.last %}
+        <hr>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+
+
+        <form method="post">
+            <p>A line here (like wechat on win)</p>
+            <input name="content" id="content">
+            <br>
+            <input type="submit" value="Send">
+        </form>
+
+
+        {% endif %}
+
+
+
+    </div>
+
+</body>
+
+</html>
