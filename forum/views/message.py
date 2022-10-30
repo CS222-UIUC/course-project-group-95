@@ -12,6 +12,9 @@ blueprint = Blueprint('message', __name__, url_prefix='/pm/')
 # cur_conversation: user to send message to
 @blueprint.route('/message', methods=('GET', 'POST'))
 def message_index():
+    if not session.get('user_id'):
+        flash('Login required.')
+        return redirect(url_for('user.login'))
     args = request.args.to_dict()
     cur_user = session.get('user_id')
 
