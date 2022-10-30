@@ -23,7 +23,7 @@ def test_homepage(client):
 # Test server can handle get request to message
 def test_notification(client):
     response = client.get('/pm/message')
-    assert (response.status_code == 200)
+    assert (response.status_code == 302)
 
 
 # Test server can handle get request to profile.html
