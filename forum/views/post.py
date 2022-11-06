@@ -1,6 +1,5 @@
 from flask import flash, redirect, render_template, request, Blueprint, url_for, session
-from ..models import authentication, post
-from sqlalchemy import exc
+from ..models import post
 
 
 # Register blueprint

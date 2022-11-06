@@ -1,6 +1,5 @@
 from flask import flash, redirect, render_template, request, Blueprint, url_for, session
-from ..models import authentication, post
-from sqlalchemy import exc
+from ..models import authentication
 
 
 # Register blueprint for user operations
@@ -22,11 +21,16 @@ def register():
         elif not password:
             message = 'Password is required.'
         else:
-            try:
+            all_users = authentication.list_all_user()
+            username_exist = False
+            for user in all_users:
+                if username == user.username:
+                    username_exist = True
+            if username_exist:
+                message = 'Username exists.'
+            else:
                 authentication.create_user(username, password)
                 return redirect(url_for('user.login'))
-            except exc.IntegrityError:
-                message = 'Username exists.'
 
         flash(message)
 

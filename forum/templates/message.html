@@ -112,6 +112,7 @@
 
             <!-- left->userlist -->
             <div id="userlist">
+                <a class="action" href="{{ url_for('message.connection_management') }}">Connection management</a>
                 {% for connection in connections %}
                 <article class="message">
                     <header>
@@ -123,16 +124,13 @@
                     </header>
 
                 </article>
+                <hr>
+                {% endfor %}
 
             </div>
 
             <!-- right->message -->
             <div id="message">
-                {% if not loop.last %}
-                <hr>
-                {% endif %}
-                {% endfor %}
-
                 {% if not cur_conversation%}
 
                 {% else %}
@@ -173,24 +171,6 @@
     </div>
 
     <div>
-        <!-- {% if not message_history%}
-        <p>Also blank here</p>
-        {% else %}
-        {% for message in message_history %}
-        {{message.sender}} says: {{message.content}} at {{message.sent_datetime}}
-        {% if not loop.last %}
-        <hr>
-        {% endif %}
-        {% endfor %}
-        {% endif %}
-
-
-        <form method="post">
-            <p>A line here (like wechat on win)</p>
-            <input name="content" id="content">
-            <br>
-            <input type="submit" value="Send">
-        </form> -->
 
 
 

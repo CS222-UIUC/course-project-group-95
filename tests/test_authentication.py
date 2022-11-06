@@ -1,6 +1,5 @@
 from flask import get_flashed_messages, session
 from forum.models.authentication import delete_all_user
-import os
 
 
 # Test server can handle get request to register.html
@@ -61,7 +60,7 @@ def test_register_existing_user(client):
     assert (response.status_code == 200)
     messages = get_flashed_messages()
     assert (messages[0] == 'Username exists.')
-    os.remove("instance/forum.db")
+    delete_all_user()
 
 
 # Test login page can warn username not available
