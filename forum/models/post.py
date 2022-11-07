@@ -47,10 +47,10 @@ def delete_all_post():
 
 # Search post by keyword,
 # keyword could be part of the post's title, content, or author
-def search_by_keyword(keyword):
+def search_post_by_keyword(keyword):
     search = "%{}%".format(keyword)
     posts = models.Post.query.filter(models.Post.title.like(search)).union(
         models.Post.query.filter(models.Post.content.like(search))).union(
             models.Post.query.filter(models.Post.author.like(search))).order_by(
-                models.Post.create_datetime.desc())
+                models.Post.create_datetime.desc()).all()
     return posts

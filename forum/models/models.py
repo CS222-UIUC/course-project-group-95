@@ -1,5 +1,4 @@
 from sqlalchemy import Integer, DateTime, String, Column
-from sqlalchemy.sql import func
 from ..db import db
 
 
@@ -48,15 +47,19 @@ class Message(db.Model):
         self.sent_datetime = sent_datetime
 
 
-# Declare message table, with id (auto_increment) as primary key;
-#       first and second as sql string; and last_contact_datetime as sql DateTime.
+# Declare connection table, with id (auto_increment) as primary key;
+#       sender and receiver as sql string; and last_contact_datetime as sql DateTime.
+# For existing connection, status is 0
+# For pending connection, status is 1, contact time is sent time
 class Connection(db.Model):
     id = Column(Integer, primary_key=True)
-    first = Column(String)
-    second = Column(String)
+    sender = Column(String)
+    receiver = Column(String)
+    status = Column(Integer)
     last_contact_datetime = Column(DateTime)
 
-    def __init__(self, first, second, last_contact_datetime):
-        self.first = first
-        self.second = second
+    def __init__(self, sender, receiver, status, last_contact_datetime):
+        self.sender = sender
+        self.receiver = receiver
+        self.status = status
         self.last_contact_datetime = last_contact_datetime

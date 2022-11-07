@@ -1,12 +1,12 @@
-from flask import flash, redirect, render_template, request, Blueprint, url_for, session
-from ..models import authentication, post
-from sqlalchemy import exc
+from flask import render_template, request, Blueprint
+from ..models import post
 
 
 # Register blueprint
 blueprint = Blueprint('index', __name__)
 
 
+# Route for the index page
 @blueprint.route('/')
 def index():
     posts = post.list_all_posts()
@@ -33,7 +33,7 @@ def search():
         if not keyword:
             return render_template("index.html", posts=posts)
         else:
-            posts = post.search_by_keyword(keyword)
+            posts = post.search_post_by_keyword(keyword)
             return render_template("index.html", posts=posts)
 
     return render_template("index.html", posts=posts)
