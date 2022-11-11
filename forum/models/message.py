@@ -87,6 +87,8 @@ def delete_connection_request(sender, receiver):
 def delete_connection(sender, receiver):
     models.Connection.query.filter_by(
         sender=sender, receiver=receiver, status=0).delete()
+    models.Connection.query.filter_by(
+        sender=receiver, receiver=sender, status=0).delete()
     db.session.commit()
 
 
