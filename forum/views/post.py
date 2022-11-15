@@ -32,7 +32,8 @@ def edit_post():
 @blueprint.route('/view')
 def view_post():
     id = request.args.to_dict()['id']
-    return render_template("post/post.html", post=post.get_post(id))
+    return render_template("post/post.html", post=post.get_post(id),
+                           upvote_num=post.get_upvote_num(id), upvoted=post.check_upvoted(session.get('user_id'), id))
 
 
 # Delete post page, redirects to index page
@@ -60,3 +61,19 @@ def create_post():
         flash(message)
 
     return render_template("post/create_post.html")
+
+
+# Upvote post
+@blueprint.route('/upvote', methods=('GET', 'POST'))
+def upvote():
+    id = request.args.to_dict()['id']
+    post.upvote_post(session.get('user_id'), id)
+    return redirect(url_for('post.view_post', id=id))
+
+
+# Unupvote post
+@blueprint.route('/unupvote', methods=('GET', 'POST'))
+def unupvote():
+    id = request.args.to_dict()['id']
+    post.unupvote_post(session.get('user_id'), id)
+    return redirect(url_for('post.view_post', id=id))

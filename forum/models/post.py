@@ -1,4 +1,5 @@
 from datetime import datetime
+from turtle import pos
 from . import models
 from ..db import db
 import pytz
@@ -54,3 +55,30 @@ def search_post_by_keyword(keyword):
             models.Post.query.filter(models.Post.author.like(search))).order_by(
                 models.Post.create_datetime.desc()).all()
     return posts
+
+
+# Upvote post
+def upvote_post(user_id, post_id):
+    tz = pytz.timezone('US/Central')
+    cur_time = datetime.now(tz=tz)
+    upvote = models.Upvote(user_id, post_id, cur_time)
+    db.session.add(upvote)
+    db.session.commit()
+
+
+# Unupvote post
+def unupvote_post(user_id, post_id):
+    models.Upvote.query.filter_by(user_id=user_id, post_id=post_id).delete()
+    db.session.commit()
+
+
+# Check if user has upvoted the post
+def check_upvoted(user_id, post_id):
+    upvoted = models.Upvote.query.filter_by(
+        user_id=user_id, post_id=post_id).all()
+    return len(upvoted) == 1
+
+
+# Get the number of upvotes of the post
+def get_upvote_num(post_id):
+    return len(models.Upvote.query.filter_by(post_id=post_id).all())
