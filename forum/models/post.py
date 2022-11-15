@@ -1,5 +1,4 @@
 from datetime import datetime
-from turtle import pos
 from . import models
 from ..db import db
 import pytz
