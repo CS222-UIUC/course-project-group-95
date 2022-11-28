@@ -75,3 +75,15 @@ class Upvote(db.Model):
         self.user_id = user_id
         self.post_id = post_id
         self.time = time
+
+
+# Declare favourite table
+class Favourite(db.Model):
+    user_id = Column(Integer, ForeignKey(User.username), primary_key=True)
+    post_id = Column(Integer, ForeignKey(Post.id), primary_key=True)
+    time = Column(DateTime)
+
+    def __init__(self, user_id, post_id, time):
+        self.user_id = user_id
+        self.post_id = post_id
+        self.time = time

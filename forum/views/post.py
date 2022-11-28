@@ -33,7 +33,10 @@ def edit_post():
 def view_post():
     id = request.args.to_dict()['id']
     return render_template("post/post.html", post=post.get_post(id),
-                           upvote_num=post.get_upvote_num(id), upvoted=post.check_upvoted(session.get('user_id'), id))
+                           upvote_num=post.get_upvote_num(id),
+                           upvoted=post.check_upvoted(
+                               session.get('user_id'), id),
+                           favourited=post.check_favourited(session.get('user_id'), id))
 
 
 # Delete post page, redirects to index page
@@ -76,4 +79,20 @@ def upvote():
 def unupvote():
     id = request.args.to_dict()['id']
     post.unupvote_post(session.get('user_id'), id)
+    return redirect(url_for('post.view_post', id=id))
+
+
+# Favourite post
+@blueprint.route('/favourite', methods=('GET', 'POST'))
+def favourite():
+    id = request.args.to_dict()['id']
+    post.favourite_post(session.get('user_id'), id)
+    return redirect(url_for('post.view_post', id=id))
+
+
+# Unfavourite post
+@blueprint.route('/unfavourite', methods=('GET', 'POST'))
+def unfavourite():
+    id = request.args.to_dict()['id']
+    post.unfavourite_post(session.get('user_id'), id)
     return redirect(url_for('post.view_post', id=id))

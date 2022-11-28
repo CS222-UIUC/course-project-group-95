@@ -81,3 +81,37 @@ def check_upvoted(user_id, post_id):
 # Get the number of upvotes of the post
 def get_upvote_num(post_id):
     return len(models.Upvote.query.filter_by(post_id=post_id).all())
+
+
+# Favourite post
+def favourite_post(user_id, post_id):
+    tz = pytz.timezone('US/Central')
+    cur_time = datetime.now(tz=tz)
+    favourite = models.Favourite(user_id, post_id, cur_time)
+    db.session.add(favourite)
+    db.session.commit()
+
+
+# Unfavourite post
+def unfavourite_post(user_id, post_id):
+    models.Favourite.query.filter_by(user_id=user_id, post_id=post_id).delete()
+    db.session.commit()
+
+
+# Check if user has favourited the post
+def check_favourited(user_id, post_id):
+    favourited = models.Favourite.query.filter_by(
+        user_id=user_id, post_id=post_id).all()
+    return len(favourited) == 1
+
+
+# Get all favourites of the user
+def get_all_favoutites(user_id):
+    return db.session.query(models.Favourite, models.Post).filter_by(user_id=user_id).join(models.Post).order_by(models.Favourite.time.desc()).all()
+
+
+# Get the total number of upvotes a user get
+def get_user_upvote_num(user_id):
+    upvotes = db.session.query(models.Upvote, models.Post).join(
+        models.Post).filter_by(author=user_id).all()
+    return len(upvotes)
