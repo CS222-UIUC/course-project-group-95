@@ -36,6 +36,16 @@
     </form>
     {% endif %}
 
+    {% if favourited %}
+    <form method="post" action="{{url_for('post.unfavourite', id=post.id)}}">
+      <input type="submit" value='Favourited'>
+    </form>
+    {% else %}
+    <form method="post" action="{{url_for('post.favourite', id=post.id)}}">
+      <input type="submit" value='Favourite'>
+    </form>
+    {% endif %}
+
 </body>
 
 </html>

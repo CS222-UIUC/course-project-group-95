@@ -1,5 +1,6 @@
 from flask import flash, redirect, render_template, request, Blueprint, url_for, session
 from ..models import authentication
+from ..models.post import get_all_favoutites, get_user_upvote_num
 
 
 # Register blueprint for user operations
@@ -88,3 +89,11 @@ def list():
     for user in users:
         user_list.append(user.username)
     return user_list
+
+
+# Profile page
+@blueprint.route('/profile')
+def profile():
+    posts = get_all_favoutites(session.get('user_id'))
+    num_upvote = get_user_upvote_num(session.get('user_id'))
+    return render_template('profile.html', posts=posts, num_upvote=num_upvote)
