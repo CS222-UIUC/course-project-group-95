@@ -28,17 +28,17 @@
     <br><br><br><br>
     {% if upvoted %}
     <form method="post" action="{{url_for('post.unupvote', id=post.id)}}">
-      <input type="submit" value='Upvoted | {{upvote_num}}'>
+      <input type="submit" style="background-color:aquamarine" value='Upvoted | {{upvote_num}}'>
     </form>
     {% else %}
     <form method="post" action="{{url_for('post.upvote', id=post.id)}}">
-      <input type="submit" value='Upvote | {{upvote_num}}'>
+      <input type="submit" value='Upvote | {{upvote_num}}' >
     </form>
     {% endif %}
 
     {% if favourited %}
     <form method="post" action="{{url_for('post.unfavourite', id=post.id)}}">
-      <input type="submit" value='Favourited'>
+      <input type="submit" style="background-color:aquamarine" value='Favourited'>
     </form>
     {% else %}
     <form method="post" action="{{url_for('post.favourite', id=post.id)}}">
