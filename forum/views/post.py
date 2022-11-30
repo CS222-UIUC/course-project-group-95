@@ -36,7 +36,9 @@ def view_post():
                            upvote_num=post.get_upvote_num(id),
                            upvoted=post.check_upvoted(
                                session.get('user_id'), id),
-                           favourited=post.check_favourited(session.get('user_id'), id))
+                           favourited=post.check_favourited(
+                               session.get('user_id'), id),
+                           replies=post.get_reply(id))
 
 
 # Delete post page, redirects to index page
@@ -96,3 +98,24 @@ def unfavourite():
     id = request.args.to_dict()['id']
     post.unfavourite_post(session.get('user_id'), id)
     return redirect(url_for('post.view_post', id=id))
+
+
+# Reply to a post
+@blueprint.route('/reply', methods=('GET', 'POST'))
+def reply():
+    post_id = request.args.to_dict()['id']
+    replies = post.get_reply(post_id)
+    if request.method == 'POST':
+        content = request.form['content']
+        message = None
+
+        if not content:
+            message = 'Reply is blank.'
+        else:
+            post.create_reply(post_id, len(replies)+1,
+                              session.get('user_id'), content)
+            return redirect(url_for('post.view_post', id=post_id))
+
+        flash(message)
+
+    return "Reply page (Access from view post)"
