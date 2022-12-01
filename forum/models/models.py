@@ -67,7 +67,7 @@ class Connection(db.Model):
 
 # Declare upvote table
 class Upvote(db.Model):
-    user_id = Column(Integer, ForeignKey(User.username), primary_key=True)
+    user_id = Column(String, ForeignKey(User.username), primary_key=True)
     post_id = Column(Integer, ForeignKey(Post.id), primary_key=True)
     time = Column(DateTime)
 
@@ -79,11 +79,27 @@ class Upvote(db.Model):
 
 # Declare favourite table
 class Favourite(db.Model):
-    user_id = Column(Integer, ForeignKey(User.username), primary_key=True)
+    user_id = Column(String, ForeignKey(User.username), primary_key=True)
     post_id = Column(Integer, ForeignKey(Post.id), primary_key=True)
     time = Column(DateTime)
 
     def __init__(self, user_id, post_id, time):
         self.user_id = user_id
         self.post_id = post_id
+        self.time = time
+
+
+# Declare reply table
+class Reply(db.Model):
+    post_id = Column(Integer, ForeignKey(Post.id), primary_key=True)
+    reply_id = Column(Integer, primary_key=True)
+    author = Column(String, ForeignKey(User.username))
+    content = Column(String)
+    time = Column(DateTime)
+
+    def __init__(self, post_id, reply_id, author, content, time):
+        self.post_id = post_id
+        self.reply_id = reply_id
+        self.author = author
+        self.content = content
         self.time = time

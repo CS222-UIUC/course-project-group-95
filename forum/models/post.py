@@ -115,3 +115,17 @@ def get_user_upvote_num(user_id):
     upvotes = db.session.query(models.Upvote, models.Post).join(
         models.Post).filter_by(author=user_id).all()
     return len(upvotes)
+
+
+# Create new reply for the given post
+def create_reply(post_id, reply_id, author, content):
+    tz = pytz.timezone('US/Central')
+    cur_time = datetime.now(tz=tz)
+    reply = models.Reply(post_id, reply_id, author, content, cur_time)
+    db.session.add(reply)
+    db.session.commit()
+
+
+# Get all reply for the given post_id
+def get_reply(post_id):
+    return models.Reply.query.filter_by(post_id=post_id).order_by(models.Reply.time).all()

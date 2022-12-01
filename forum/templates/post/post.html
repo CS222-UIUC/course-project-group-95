@@ -32,7 +32,7 @@
     </form>
     {% else %}
     <form method="post" action="{{url_for('post.upvote', id=post.id)}}">
-      <input type="submit" value='Upvote | {{upvote_num}}' >
+      <input type="submit" value='Upvote | {{upvote_num}}'>
     </form>
     {% endif %}
 
@@ -45,6 +45,25 @@
       <input type="submit" value='Favourite'>
     </form>
     {% endif %}
+
+    <br><br>
+    <form method="post" action="{{url_for('post.reply', id=post.id)}}">
+      <input type="content" name="content" id="content">
+      <input type="submit" value='Reply'>
+    </form>
+
+    {% if replies %}
+    <p>Replies:</p>
+    {% endif %}
+
+    {% for reply in replies %}
+    <p>{{reply.content}}</p>
+    <p>By {{reply.author}} on {{reply.time}}</p>
+    {% if not loop.last %}
+    <hr>
+    {% endif %}
+    {% endfor %}
+
 
 </body>
 
