@@ -152,3 +152,30 @@ def test_search(client):
 
     delete_all_user()
     delete_all_post()
+
+
+# Test reply function
+def test_reply(client):
+    response = client.post(
+        '/user/register', data={'username': 'zhangsan', 'password': '123'})
+    assert (response.status_code == 302)
+    messages = get_flashed_messages()
+    assert (messages == [])
+    response = client.post(
+        '/user/login', data={'username': 'zhangsan', 'password': '123'})
+    assert (response.status_code == 302)
+    messages = get_flashed_messages()
+    assert (messages == [])
+    response = client.post(
+        '/post/create', data={'title': 'post title', 'content': 'this is a post'})
+    assert (response.status_code == 302)
+    messages = get_flashed_messages()
+    assert (messages == [])
+    response = client.post(
+        '/post/reply?id=1', data={'content': 'this is a reply'})
+    assert (response.status_code == 302)
+    messages = get_flashed_messages()
+    assert (messages == [])
+
+    delete_all_user()
+    delete_all_post()
