@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Message - Chat Forum</title>
+
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
+
+
+    <style type="text/css">
+        body {
+            margin: 0px;
+            height: 100%;
+            width: 100%;
+        }
+
+        div#container {
+            width: 100%;
+            height: 100%;
+        }
+
+        div#userlist {
+            width: 25%;
+            height: 825px;
+            background-color:ghostwhite;
+            float: left;
+        }
+
+        div#message {
+            width: 75%;
+            height: 825px;
+            float: left;
+        }
+
+        div#message_display {
+            width: 100%;
+            height: 495px;
+        }
+
+        div#message_send {
+            width: 100%;
+            height: 330px;
+        }
+
+        div#message_send_content {
+            width: 90%;
+            height: 330px;
+            ;
+            float: left;
+        }
+
+        div#message_send_send {
+            width: 10%;
+            height: 330px;
+            ;
+            float: left;
+        }
+
+
+        div#headline {
+            width: 100%;
+            height: 150px;
+            background-color: aliceblue;
+            font-size: 20px;
+        }
+
+        div#mainbody {
+            width: 100%;
+            height: 825px;
+        }
+
+        #content {
+            width: 100%;
+            height: 309px;
+        }
+
+        #send {
+            width: 100%;
+            height: 315px;
+        }
+
+        div#friendname {
+            width: 100%;
+            height: 40px;
+            text-align: center;
+            font-size: 30px;
+            padding-top: 10px;
+        }
+
+        div#back {
+            float:left;
+            width: 5%;
+            line-height: 50px;
+            text-align: center;
+        }
+        div#co_manage {
+            margin-left: 85%;
+            line-height: 50px;
+        }   
+    </style>
+</head>
+
+
+
+<body>
+    <div id="container">
+        <!-- headline -->
+        <div id="headline">
+            <div id="back">
+                <a class="action" href="{{ url_for('index.index') }}">Back</a>
+            </div>
+
+            <div id="co_manage">
+                <a class="action" href="{{ url_for('message.connection_management') }}">Connection management</a>
+            </div>
+        </div>
+
+        <!-- mainbody -->
+        <div id="mainbody">
+
+            <!-- left->userlist -->
+            <div id="userlist">
+                {% for connection in connections %}
+                <article class="message">
+                    <header>
+                        <div id=friendname>
+                            <a class="action"
+                                href="{{ url_for('message.message_index', conversation=connection.username) }}">{{connection.username}}</a>
+                        </div>
+
+                    </header>
+
+                </article>
+                <hr>
+                {% endfor %}
+
+            </div>
+
+            <!-- right->message -->
+            <div id="message">
+                {% if not cur_conversation%}
+
+                {% else %}
+
+                <div id="message_display">
+                    <p>Messages with {{cur_conversation}}:</p>
+                    {% if not message_history%}
+                    <p>Also blank here</p>
+                    {% else %}
+                    {% for message in message_history %}
+                    {{message.sender}} says: {{message.content}} at {{message.sent_datetime}} <br>
+                    {% if not loop.last %}
+                    <!-- <hr> -->
+                    {% endif %}
+                    {% endfor %}
+
+                    {% endif %}
+                </div>
+
+                <div id="message_send">
+
+                    <form method="post">
+                        <div id="message_send_content">
+                            <input type="text" name="content" id="content">
+                        </div>
+
+                        <div id="message_send_send">
+                            <input type="submit" value="Send" id="send">
+                        </div>
+                    </form>
+                </div>
+                {% endif %}
+
+
+
+            </div>
+        </div>
+    </div>
+
+    <div>
+
+
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <a class="action" href="{{ url_for('message.message_index') }}">Back</a>
+
+    <form method="post">
+        <label for="Add connection">Search for user to connect with:</label>
+        <input name="username" id="username">
+        <input type="submit" value="Search">
+    </form>
+    {% if search_result %}
+    <p>{{search_result.username}}</p>
+    <form method="post">
+        <input type="hidden" id="send_connection" name="send_connection" value={{search_result.username}}>
+        <input type="submit" value="Connect">
+    </form>
+    {% endif %}
+    {% for message in get_flashed_messages() %}
+    <p>{{ message }}</p>
+    {% endfor %}
+
+    <br><br><br>
+
+    {% if pending_sent_request or pending_received_request %}
+    <p>Pending:</p>
+    <hr>
+
+    {% for pending_connection in pending_sent_request %}
+    <p>{{pending_connection.receiver}}</p>
+    <p>Request sent</p>
+    <hr>
+    {% endfor %}
+
+    {% for pending_connection in pending_received_request %}
+    <p>{{pending_connection.sender}}</p>
+    <form method="post">
+        <input type="hidden" id="accept_connection" name="accept_connection" value={{pending_connection.sender}}>
+        <input type="submit" value="Accept">
+    </form>
+    <form method="post">
+        <input type="hidden" id="decline_connection" name="decline_connection" value={{pending_connection.sender}}>
+        <input type="submit" value="Decline">
+    </form>
+    <hr>
+    {% endfor %}
+    <br><br><br>
+    {% endif %}
+
+
+
+    <p>Connections:</p>
+    <hr>
+    {% if connections == [] %}
+    <p>No connections</p>
+    {% endif %}
+
+    {% for connection in connections %}
+    <p>{{connection.username}}</p>
+    <form method="post">
+        <input type="hidden" id="delete_connection" name="delete_connection" value={{connection.username}}>
+        <input type="submit" value="Delete">
+    </form>
+    <hr>
+    {% endfor %}
+</body>
+
+</html>

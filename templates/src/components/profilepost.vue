@@ -1,0 +1,74 @@
+<template>
+  <div class="profilepost-container" v-bind:class="rootClassName">
+    <div class="profilepost-container1">
+      <span>{{ text1 }}</span>
+      <span class="profilepost-text1">Date</span>
+    </div>
+    <span>{{ text2 }}</span>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'Profilepost',
+  props: {
+    text1: {
+      type: String,
+      default: 'Title',
+    },
+    text2: {
+      type: String,
+      default: 'asdkklasjda;skljdkas;djaskldja;ldjasjd;asjdas;kdsadas;',
+    },
+    rootClassName: String,
+  },
+}
+</script>
+
+<style scoped>
+.profilepost-container {
+  width: 1060px;
+  height: 108px;
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  padding-top: var(--dl-space-space-oneandhalfunits);
+  padding-left: 270px;
+  padding-right: 270px;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.profilepost-container1 {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.profilepost-text1 {
+  color: var(--dl-color-gray-black);
+  font-style: normal;
+  font-weight: 500;
+}
+.profilepost-root-class-name {
+  width: 100%;
+  height: 100%;
+}
+.profilepost-root-class-name1 {
+  width: 100%;
+  height: 100%;
+}
+.profilepost-root-class-name2 {
+  width: 100%;
+  height: 100%;
+}
+@media(max-width: 479px) {
+  .profilepost-container1 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .profilepost-text1 {
+    width: auto;
+  }
+}
+</style>

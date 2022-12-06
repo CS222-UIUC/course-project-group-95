@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>post.title</title>
+
+  <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
+
+  <style type="text/css">
+    body {
+      margin:0px;
+    }
+
+    div#back {
+      margin-left: 10px;
+      width: 100%;
+      height: 30px;
+    }
+
+    div#title {
+      text-align:center;
+      width: 100%;
+      height: 50px;
+      font-size:xx-large;
+      font-weight: bolder;
+    }
+
+    div#information {
+      text-align:center;
+      width: 100%;
+      height: 100px;
+      font-weight:lighter;
+    }
+
+    div#content {
+      padding-left: 20%;
+      padding-right: 20%;
+
+      height: 100%;
+      word-wrap: break-word;
+      width:60%;
+    }
+
+    div#header {
+      background-color:aliceblue;
+    }
+
+    div#edit {
+        padding-left: 20%;
+        padding-right: 20%;
+        width:60%;
+        text-align:right;
+        line-height: 50px;
+        height: 50px;
+    }
+
+    div#upvote {
+
+        height: 150px;
+        display:inline-block;
+        margin:10px;
+        width: 150px;
+    }
+
+    div#reply {
+
+        display:inline-block;
+  
+
+    }
+
+    div#interact {    
+      padding-top: 20px;
+      text-align:center;
+    }
+
+    #box {  
+      width:1000px;
+      height: 110px;
+      padding: 10px;
+    }
+
+    #send {
+      height: 95px;
+      width:75px;
+      text-align: center;
+      
+    }
+
+    div#reply_post {
+      padding-left: 20%;
+      padding-right: 20%;
+      width: 100%;
+      height: 100%;
+      word-wrap: break-word;
+      width:60%;
+      background-color:aliceblue;
+    }
+
+
+    div#Reply_title {
+      text-align:center;
+      width: 100%;
+      height: 50px;
+      font-size:x-large;
+      font-weight: bold;
+    }
+
+    div#information_reply {
+      text-align:right;
+      width: 100%;
+      font-weight:lighter;
+    }
+  
+
+
+
+  </style>
+
+
+</head>
+
+<body>
+
+  <div id = header>
+    <div id = back>
+      <a class="action" href="{{ url_for('index.index') }}">Back</a>
+      
+      {% if session.get('user_id') %}
+        <li><span>{{ 'Welcome, '+ session.get('user_id') }}</span>
+      {% endif %}
+  
+    </div>
+
+    <div id = title>
+      <p>{{post.title}}</p>
+    </div>
+
+    <div id = information>
+      <p>Author: {{post.author}}</p>
+      <p>Create_datetime: {{post.create_datetime}}</p>
+    </div>
+
+  </div>
+
+  <div id = content>
+    <p>{{post.content}}</p>
+  </div>
+
+
+
+  <div id = edit>
+    {% if session.get('user_id') == post['author'] %}
+      <a class="action" href="{{ url_for('post.edit_post', id=post['id']) }}">Edit</a>
+      <a class="action" href="{{ url_for('post.delete_post', id=post['id']) }}">Delete</a>
+    {% endif %}
+  </div>
+
+
+  <div id = interact>
+    <div id = reply>
+      <form method="post" action="{{url_for('post.reply', id=post.id)}}">
+        <!-- <input type="content" name="content" id="box"> -->
+        <textarea  name="content" id="box"></textarea> 
+    </div>
+
+
+    <div id = upvote>
+
+        <input type="submit" value='Reply' id = "send">
+        </form>
+        
+        {% if upvoted %}
+        <form method="post" action="{{url_for('post.unupvote', id=post.id)}}">
+          <input type="submit" style="background-color:aquamarine" value='Upvoted | {{upvote_num}}'>
+        </form>
+        {% else %}
+        <form method="post" action="{{url_for('post.upvote', id=post.id)}}">
+          <input type="submit" value='Upvote | {{upvote_num}}'>
+        </form>
+        {% endif %}
+
+        {% if favourited %}
+        <form method="post" action="{{url_for('post.unfavourite', id=post.id)}}">
+          <input type="submit" style="background-color:aquamarine" value='Favourited'>
+        </form>
+        {% else %}
+        <form method="post" action="{{url_for('post.favourite', id=post.id)}}">
+          <input type="submit" value='Favourite'>
+        </form>
+        {% endif %}
+      </div>
+    </div>
+
+
+      {% if replies %}
+      <div id = reply_post>
+      <div id = Reply_title>
+        <p>Replies</p>
+      </div>
+      {% endif %}
+    
+
+      {% for reply in replies %}
+      <p>{{reply.content}}</p>
+      <br>
+      <br>
+      <div id = information_reply>
+        <p>By {{reply.author}} on {{reply.time}}</p>
+      </div>
+
+      {% if not loop.last %}
+      <hr>
+      {% endif %}
+      {% endfor %}
+    </div>
+
+
+</body>
+
+</html>

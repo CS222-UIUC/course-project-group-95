@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+  <style type="text/css">
+    body {
+      margin: 0px;
+    }
+
+    div#top {
+      width: 100%;
+      height: 100px;
+      background-color: aliceblue;
+    }
+
+    div#topleft {
+      float: left;
+      margin-left: 10px;
+      width: 200px;
+      height: 100px;
+    }
+
+    div#topmiddle {
+      float: left;
+      margin-left: 36.3%;
+      height: 100px;
+      font-size: xx-large;
+      font-weight: bolder;
+      line-height: 100px;
+
+    }
+
+    div#topright {
+      margin-left: 85%;
+      height: 100px;
+      line-height: 100px;
+    }
+
+    div#post_region {
+      margin-top: 50px;
+      padding-left: 20%;
+      padding-right: 20%;
+      width: 100%;
+      height: 100%;
+      word-wrap: break-word;
+      width:60%;
+    }
+
+    div#offset {
+      height: 10px;
+    }
+  </style>
+
+  <title>Chat Forum</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}" />
+
+</head>
+
+<body>
+  <div id="top">
+
+    <div id="topleft">
+      <nav>
+        <ul>
+          {% if session.get('user_id') %}
+          <li><span>{{ 'Welcome, '+session.get('user_id') }}</span>
+          <li><a href="{{ url_for('post.create_post') }}">New post</a>
+          <li><a href="{{ url_for('user.logout') }}">Log Out</a>
+            {% else %}
+          <li><a href="{{ url_for('user.register') }}">Register</a>
+          <li><a href="{{ url_for('user.login') }}">Log In</a>
+            {% endif %}
+        </ul>
+      </nav>
+    </div>
+
+    <div id="topmiddle">
+
+      Chat Forum
+
+    </div>
+
+    <div id="topright">
+      <link href="{{url_for('static',filename='home.css')}}" rel="stylesheet" />
+
+      <form action="{{url_for('index.search')}}" method="post">
+        <input name="keyword" id="keyword" placeholder="Enter keyword">
+        <input type="submit" value="Search">
+      </form>
+    </div>
+
+
+
+  </div>
+
+  <div>
+    <div id="offset">
+
+
+    </div>
+
+    <div class="home-container">
+
+      <nav class="homehead-nav homehead-root-class-name18">
+        <a href="{{url_for('index.index')}}" class="homehead-text"><span>Home</span></a>
+
+        <a href="{{url_for('message.message_index')}}" class="homehead-navlink1">
+          <span>Message</span>
+        </a>
+        <a href="{{url_for('user.profile')}}" class="homehead-navlink2">
+          <span>Profile</span>
+        </a>
+      </nav>
+      <div data-type="AccordionHeader" class="home-accordion-header">
+        <svg viewBox="0 0 1024 1024" class="home-icon">
+          <path
+            d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z">
+          </path>
+        </svg>
+      </div>
+
+
+      <!-- post region -->
+
+      <div id="post_region">
+
+        </header>
+        {% for post in posts %}
+        <article class="post">
+          <header>
+            <div>
+              <a class="action" href="{{ url_for('post.view_post', id=post.id) }}">{{post.title}}</a>
+              <div class="about">by {{ post['author'] }} on {{ post['create_datetime'].strftime('%Y-%m-%d %H:%M:%S') }}
+              </div>
+            </div>
+          </header>
+          <p class="body">{{ post['content'] }}</p>
+        </article>
+
+
+
+        {% if not loop.last %}
+        <hr>
+        {% endif %}
+        {% endfor %}
+      </div>
+
+    </div>
+
+
+  </div>
+
+</body>
+
+</html>
