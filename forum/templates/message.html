@@ -22,7 +22,7 @@
         div#userlist {
             width: 25%;
             height: 825px;
-            background-color:ghostwhite;
+            background-color: ghostwhite;
             float: left;
         }
 
@@ -88,15 +88,16 @@
         }
 
         div#back {
-            float:left;
+            float: left;
             width: 5%;
             line-height: 50px;
             text-align: center;
         }
+
         div#co_manage {
             margin-left: 85%;
             line-height: 50px;
-        }   
+        }
     </style>
 </head>
 
@@ -145,7 +146,7 @@
                 <div id="message_display">
                     <p>Messages with {{cur_conversation}}:</p>
                     {% if not message_history%}
-                    <p>Also blank here</p>
+                    <!-- <p>Also blank here</p> -->
                     {% else %}
                     {% for message in message_history %}
                     {{message.sender}} says: {{message.content}} at {{message.sent_datetime}} <br>
